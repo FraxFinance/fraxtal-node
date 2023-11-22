@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  testnet-geth:
+    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101304.1
+    ports:
+      - 8545:8545
+      - 8546:8546
+    entrypoint: ["geth-entrypoint"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8545"]
+      interval: 5s
+      timeout: 10s
+      retries: 100
+    env_file: .env.testnet
+    volumes:
+      - ./testnet/data/op-geth:/data
+      - ./testnet/genesis.json:/data/genesis.json:ro
+      - ./geth-entrypoint.sh:/bin/geth-entrypoint
+  testnet-node:
+    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node:v1.3.1
+    ports:
+      - 7545:8545
+      - 9222:9222
+      - 9222:9222/udp
+    entrypoint: ["node-entrypoint"]
+    depends_on:
+      testnet-geth:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8545"]
+      interval: 5s
+      timeout: 10s
+      retries: 100
+    env_file: .env.testnet
+    volumes:
+      - ./testnet/rollup.json:/data/rollup.json:ro
+      - ./node-entrypoint.sh:/bin/node-entrypoint
