@@ -1,6 +1,6 @@
-# Fraxchain node
+# Fraxtal node
 
-This repo contains all the files required to start a fraxchain node.
+This repo contains all the files required to start a fraxtal node.
 
 ### Usage
 
