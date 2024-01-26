@@ -18,7 +18,7 @@ services:
       - ./testnet/genesis.json:/data/genesis.json:ro
       - ./geth-entrypoint.sh:/bin/geth-entrypoint
   testnet-node:
-    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node:a371733ab8b8ca288829e94734fbcdf88907e7c3
+    image: public.ecr.aws/w8t4j9l3/fraxchain-testnet-optimism/op-node:a371733ab8b8ca288829e94734fbcdf88907e7c3
     ports:
       - 7545:8545
       - 9222:9222
