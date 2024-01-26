@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   testnet-geth:
-    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101304.2
+    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101305.1
     ports:
       - 8545:8545
       - 8546:8546
@@ -18,7 +18,7 @@ services:
       - ./testnet/genesis.json:/data/genesis.json:ro
       - ./geth-entrypoint.sh:/bin/geth-entrypoint
   testnet-node:
-    image: public.ecr.aws/d7v3u3t4/fraxchain-testnet-optimism/op-node:fac73223265508cd55acdaf8f6663a0c5e1aeed2
+    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node:a371733ab8b8ca288829e94734fbcdf88907e7c3
     ports:
       - 7545:8545
       - 9222:9222
@@ -36,24 +36,3 @@ services:
     volumes:
       - ./testnet/rollup.json:/data/rollup.json:ro
       - ./node-entrypoint.sh:/bin/node-entrypoint
-  celestia:
-    image: ghcr.io/rollkit/celestia-da:v0.12.1-rc3
-    command:
-      - celestia-da
-      - light
-      - start
-      - --core.ip=full.consensus.mocha-4.celestia-mocha.com
-      - --p2p.network=mocha
-      - --rpc.addr=0.0.0.0
-      - --rpc.port=26658
-      - --node.store=/data
-      - --da.grpc.listen=0.0.0.0:26650
-      - --da.grpc.namespace=667261786374657374
-      - --gateway
-    environment:
-      NODE_STORE: /data
-      NODE_TYPE: light
-      P2P_NETWORK: mocha
-    volumes:
-      - ./testnet/data/celestia:/data
-    env_file: .env.testnet
