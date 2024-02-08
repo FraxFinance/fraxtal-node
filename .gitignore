@@ -1,3 +1,4 @@
 /*net/data
 .env*
 !.env.*.SAMPLE
+!.env.SAMPLE

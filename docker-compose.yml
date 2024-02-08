@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  mainnet-geth:
+    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101305.1
+    ports:
+      - 8545:8545
+      - 8546:8546
+    entrypoint: ["geth-entrypoint"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8545"]
+      interval: 5s
+      timeout: 10s
+      retries: 100
+    env_file: .env
+    volumes:
+      - ./mainnet/data/op-geth:/data
+      - ./mainnet/genesis.json:/data/genesis.json:ro
+      - ./geth-entrypoint.sh:/bin/geth-entrypoint
+  mainnet-node:
+    image: ghcr.io/fraxfinance/fraxtal-op-node:v1.4.2-frax-1.0.0
+    ports:
+      - 7545:8545
+      - 9222:9222
+      - 9222:9222/udp
+    entrypoint: ["node-entrypoint"]
+    depends_on:
+      mainnet-geth:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8545"]
+      interval: 5s
+      timeout: 10s
+      retries: 100
+    env_file: .env
+    volumes:
+      - ./mainnet/rollup.json:/data/rollup.json:ro
+      - ./node-entrypoint.sh:/bin/node-entrypoint
