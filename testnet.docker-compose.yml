@@ -6,6 +6,8 @@ services:
     ports:
       - 8545:8545
       - 8546:8546
+      - 30303:30303/tcp
+      - 30303:30303/udp
     entrypoint: ["geth-entrypoint"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8545"]
@@ -21,7 +23,7 @@ services:
     image: ghcr.io/fraxfinance/fraxtal-op-node:v1.7.1-frax-1.0.0
     ports:
       - 7545:8545
-      - 9222:9222
+      - 9222:9222/tcp
       - 9222:9222/udp
     entrypoint: ["node-entrypoint"]
     depends_on:
