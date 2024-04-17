@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mainnet-geth:
-    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101308.2
+    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101311.0
     ports:
       - 8545:8545
       - 8546:8546
@@ -20,7 +20,7 @@ services:
       - ./mainnet/genesis.json:/data/genesis.json:ro
       - ./geth-entrypoint.sh:/bin/geth-entrypoint
   mainnet-node:
-    image: ghcr.io/fraxfinance/fraxtal-op-node:v1.7.1-frax-1.0.0
+    image: ghcr.io/fraxfinance/fraxtal-op-node:v1.7.3-frax-1.1.0
     ports:
       - 7545:8545
       - 9222:9222/tcp
