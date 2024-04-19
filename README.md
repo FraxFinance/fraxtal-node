@@ -2,6 +2,10 @@
 
 This repo contains all the files required to start a fraxtal node.
 
+### New releases
+
+Make sure you watch this repo for releases to be informed about new network settings, node software upgrades etc.
+
 ### Usage
 
 1. Copy the env file of the network you want to start removing the `.SAMPLE` suffix (e.g. from `.env.testnet.SAMPLE` to `.env.testnet`)
