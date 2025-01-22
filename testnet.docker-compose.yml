@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   testnet-geth:
-    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101408.0
+    image: ghcr.io/fraxfinance/fraxtal-op-geth:v1.101411.1-frax-1.0.0
     ports:
       - 8545:8545
       - 8546:8546
