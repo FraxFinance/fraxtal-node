@@ -20,7 +20,7 @@ services:
       - ./testnet/genesis.json:/data/genesis.json:ro
       - ./geth-entrypoint.sh:/bin/geth-entrypoint
   testnet-node:
-    image: ghcr.io/fraxfinance/fraxtal-op-node:v1.12.0-frax-1.1.0
+    image: ghcr.io/fraxfinance/fraxtal-op-node:v1.12.2-frax-1.1.0
     ports:
       - 7545:8545
       - 9222:9222/tcp
