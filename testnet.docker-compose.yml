@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   testnet-geth:
     image: ghcr.io/fraxfinance/fraxtal-op-geth:v1.101511.1-frax-1.3.0
