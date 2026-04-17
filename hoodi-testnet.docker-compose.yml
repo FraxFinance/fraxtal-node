@@ -1,6 +1,6 @@
 services:
   testnet-reth:
-    image: ghcr.io/fraxfinance/fraxtal-op-reth:v1.11.3-frax-1.3.2
+    image: ghcr.io/fraxfinance/fraxtal-op-reth:v2.0.0-frax-1.3.2
     ports:
       - 8545:8545
       - 8546:8546
@@ -17,7 +17,7 @@ services:
       - ./hoodi-testnet/data/op-reth:/data
       - ./reth-entrypoint.sh:/bin/reth-entrypoint
   testnet-node:
-    image: ghcr.io/fraxfinance/fraxtal-op-node:v1.16.9-frax-1.2.1
+    image: ghcr.io/fraxfinance/fraxtal-op-node:v1.16.12-frax-1.2.1
     ports:
       - 7545:8545
       - 9222:9222/tcp
