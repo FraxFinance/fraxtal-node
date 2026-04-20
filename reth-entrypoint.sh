@@ -68,4 +68,5 @@ exec fraxtal-op-reth node \
     --rollup.disable-tx-pool-gossip \
     --discovery.port="$RETH_DISCOVERY_PORT" \
     --port="$RETH_P2P_PORT" \
+    --storage.v2=false \
     $ADDITIONAL_ARGS
