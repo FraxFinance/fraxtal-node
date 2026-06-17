@@ -1,6 +1,6 @@
 services:
   testnet-reth:
-    image: ghcr.io/fraxfinance/fraxtal-op-reth:v2.1.0-frax-1.3.4
+    image: ghcr.io/fraxfinance/fraxtal-op-reth:v2.3.1-frax-1.3.4
     ports:
       - 8545:8545
       - 8546:8546
@@ -15,23 +15,26 @@ services:
     env_file: .env.hoodi-testnet
     volumes:
       - ./hoodi-testnet/data/op-reth:/data
-      - ./reth-entrypoint.sh:/bin/reth-entrypoint
+      - ./reth-entrypoint.sh:/bin/reth-entrypoint:ro
+  testnet-node-init:
+    image: busybox:stable
+    command: ["sh", "-c", "echo \"$$OP_ENGINE_API_JWT\" > /data/jwt && cp /rollup.json /data/rollup.json"]
+    env_file: .env.hoodi-testnet
+    volumes:
+      - ./hoodi-testnet/data/op-node:/data
+      - ./hoodi-testnet/rollup.json:/rollup.json:ro
   testnet-node:
-    image: ghcr.io/fraxfinance/fraxtal-op-node:v1.16.12-frax-1.2.1
+    image: ghcr.io/fraxfinance/fraxtal-op-node:v1.19.0-frax-1.2.1
     ports:
       - 7545:8545
       - 9222:9222/tcp
       - 9222:9222/udp
-    entrypoint: ["node-entrypoint"]
+    entrypoint: ["op-node"]
     depends_on:
       testnet-reth:
         condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8545"]
-      interval: 5s
-      timeout: 10s
-      retries: 100
+      testnet-node-init:
+        condition: service_completed_successfully
     env_file: .env.hoodi-testnet
     volumes:
-      - ./hoodi-testnet/rollup.json:/data/rollup.json:ro
-      - ./node-entrypoint.sh:/bin/node-entrypoint
+      - ./hoodi-testnet/data/op-node:/data
